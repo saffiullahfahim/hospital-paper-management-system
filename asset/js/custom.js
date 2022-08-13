@@ -43,7 +43,27 @@ const loginLoad = () => {
   password.oninput = (e) => {
     if (e.inputType == "historyUndo") return;
     if (e.inputType == "insertText" || e.inputType == "insertCompositionText") {
-      e.target.value = e.target.value.slice(0, -1 * e.data.length);
+      if (e.data) {
+        $password =
+          $password.substr(0, e.target.selectionStart - 1) +
+          e.data +
+          $password.substr(e.target.selectionStart - 1);
+      } else {
+        $password =
+          $password.substr(0, e.target.selectionStart) +
+          $password.substr(
+            e.target.selectionStart + ($password.length - e.target.value.length)
+          );
+      }
+
+      let start = e.target.selectionStart;
+      let value = e.target.value;
+      let result = "";
+      for (let i of value) {
+        result += "•";
+      }
+      e.target.value = result;
+      setCaretPosition(e.target, start);
       return;
     }
     if (e.target.value.length != e.target.selectionStart) {
