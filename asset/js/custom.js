@@ -437,6 +437,7 @@ const addUserLoad = (data) => {
             loading.style.display = "none";
           } else {
             showUserData(data);
+            userSearchLoad(data);
             e.target.reset();
             button.innerText = "Add";
             success.innerText = "Successfully added new user!";
@@ -733,6 +734,7 @@ const addDocumentLoad = (data) => {
         const { result, data } = res;
         if (result) {
           showDocumentData(data);
+          documentSearchLoad(data);
           e.target.reset();
           button.innerText = "Add";
           success.innerText = "Successfully added new document!";
