@@ -31,12 +31,38 @@ const loginLoad = () => {
   forgetPasswordLoad();
 
   let $password = "";
+  let $prePass = "";
+
+  password.onpaste = (e) => {
+    $prePass = e.target.value;
+  };
+
+  password.onundo = (e) => {
+    e.preventDefault();
+  };
   password.oninput = (e) => {
-    if (e.data) {
+    if (e.inputType == "historyUndo") return;
+    if (e.inputType == "insertText" || e.inputType == "insertCompositionText") {
+      e.target.value = e.target.value.slice(0, -1 * e.data.length);
+      return;
+    }
+    if (e.target.value.length != e.target.selectionStart) {
+      $prePass = $prePass.slice(
+        0,
+        $prePass.length - e.target.value.length + e.target.selectionStart
+      );
+      $prePass = e.target.value
+        .slice(0, -e.target.value.length + e.target.selectionStart)
+        .substr($prePass.length);
+    } else if (e.inputType == "insertFromPaste") {
+      $prePass = e.target.value.substr($prePass.length);
+    }
+
+    if ($prePass) {
       $password =
-        $password.substr(0, e.target.selectionStart - 1) +
-        e.data +
-        $password.substr(e.target.selectionStart - 1);
+        $password.substr(0, e.target.selectionStart - $prePass.length) +
+        $prePass +
+        $password.substr(e.target.selectionStart - $prePass.length);
     } else {
       $password =
         $password.substr(0, e.target.selectionStart) +
@@ -45,6 +71,7 @@ const loginLoad = () => {
         );
     }
 
+    $prePass = "";
     let start = e.target.selectionStart;
     let value = e.target.value;
     let result = "";
@@ -685,11 +712,11 @@ const addDocumentLoad = (data) => {
     let fields = await pdf.getFieldObjects();
     console.log(fields);
 
-    if (fields["Name"] == undefined) {
+    if (fields?.Name == undefined) {
       err.push("Name");
     }
 
-    if (fields["Date"] == undefined) {
+    if (fields?.Date == undefined) {
       err.push("Date");
     }
 
