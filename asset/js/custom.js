@@ -633,6 +633,7 @@ const showDocumentData = (data, type = "") => {
       });
       res = JSON.parse(JSON.parse(res).messege);
       showDocumentData(res.data);
+      documentSearchLoad(res.data);
       document.querySelector("#search").value = "";
     };
   }
