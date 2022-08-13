@@ -22,7 +22,7 @@ const login = `
   					<div class="row">
   						<div class="col-sm-12">
   							<div class="input-bx pass-bx">
-  								<input type="text" spellcheck="false" id="password" class="form-control" autocomplete="off" required placeholder="Password"/>
+  								<input type="text" oncopy="event.preventDefault();" onpaste="event.preventDefault();"  spellcheck="false" id="password" class="form-control" autocomplete="off" required placeholder="Password"/>
   							</div>
   						</div><!-- col -->
   					</div><!-- row -->
