@@ -84,7 +84,7 @@ const documentPage = `
 
 							<div class="mdl-input-bx">
 								<label>Document File</label>
-								<input type="file" spellcheck="false" name="" id="addDocumentFile" class="form-control" autocomplete="off" required/>
+								<input type="file" spellcheck="false" name="" id="addDocumentFile" onchange="let docName = document.querySelector('#addDocumentName'); if(docName.value == ''){docName.value = this.files[0].name.slice(0, -4)}" class="form-control" autocomplete="off" required/>
 							</div>
 
 							<button type="submit" id="addDocumentBtn" class="custom-btn popSubmit">Add</button>
@@ -235,6 +235,6 @@ const documentPage = `
 	</div>
 	<!-- modal -->
 	
-`
+`;
 
 export { documentPage };
