@@ -229,6 +229,7 @@ const showUserData = (data, type = "") => {
   }
   table.style.display = "table";
   loading.style.display = "none";
+  sortingLoad(0, data, type, showUserData);
 };
 
 const userSearchLoad = (data) => {
@@ -685,6 +686,7 @@ const showDocumentData = (data, type = "") => {
     };
   }
   loading.style.display = "none";
+  sortingLoad(1, data, type, showDocumentData);
 };
 
 const addDocumentLoad = (data) => {
@@ -950,6 +952,7 @@ const showInboxData = ({ user, data, database }, type = "") => {
 
   table.style.display = "table";
   loading.style.display = "none";
+  sortingLoad(0, data, type, showInboxData);
 };
 
 const inboxSearchLoad = (res) => {
@@ -1118,6 +1121,7 @@ const showHistoryData = ({ user, data, database }, type = "") => {
 
   table.style.display = "table";
   loading.style.display = "none";
+  sortingLoad(0, data, type, showHistoryData);
 };
 
 const historySearchLoad = (res) => {
@@ -1140,6 +1144,42 @@ const historySearchLoad = (res) => {
     }
     res.data = finalData;
     showHistoryData(res, 1);
+  };
+};
+
+const sortingLoad = (index, data, type, callback) => {
+  let sortingBtn = document.querySelector("#sortingBtn");
+  let loading = document.querySelector("#loading");
+  sortingBtn.onclick = () => {
+    if (data.length) {
+      loading.style.display = "block";
+
+      let data1 = data[0][index];
+      if (type == "") {
+        data.forEach((v, i) => {
+          data[i].push(i + 1);
+        });
+        type = 1;
+      }
+
+      data = data.sort((a, b) => {
+        let x = a[index].substr(1).toLowerCase();
+        let y = b[index].substr(1).toLowerCase();
+        if (x < y) {
+          return -1;
+        }
+        if (x > y) {
+          return 1;
+        }
+        return 0;
+      });
+
+      if (data[0][index] === data1) {
+        data = data.reverse();
+      }
+      //console.log(data);
+      callback(data, type);
+    }
   };
 };
 

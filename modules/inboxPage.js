@@ -16,10 +16,8 @@ const inboxPage = `
 							</button>
 							<input type="text" autocomplete="off" spellcheck="false" name="search" id="search" placeholder="Search">
 						</form>
-						<span class="ic-dv arrow-ic">
-							<a href="#">
-								<img src="asset/img/up-dwn-arr.png" alt="Icon">
-							</a>
+						<span style="cursor: pointer;" id="sortingBtn" class="ic-dv arrow-ic">
+							<img src="./asset/img/up-dwn-arr.png" alt="Icon">
 						</span>
 					</div>
 					
